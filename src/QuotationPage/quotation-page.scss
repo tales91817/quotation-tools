@@ -239,3 +239,26 @@ table {
 .toolBar {
   width: 10%;
 }
+
+.sign {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 50px;
+  .singZone {
+    position: relative;
+
+    canvas {
+      width: 300px;
+      border-bottom: 1px solid black;
+    }
+
+    .reset-btn {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    p {
+      text-align: center;
+    }
+  }
+}
