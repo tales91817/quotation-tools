@@ -1,0 +1,15 @@
+.toolBar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  opacity: 0.7;
+
+  .icon {
+    margin: 20px 0;
+    cursor: pointer;
+  }
+}

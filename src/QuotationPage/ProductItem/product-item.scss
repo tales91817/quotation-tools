@@ -1,0 +1,21 @@
+tbody {
+  position: relative;
+  tr:nth-child(even) {
+    background: lightgrey;
+  }
+  td {
+    padding: 10px 0;
+    vertical-align: middle;
+  }
+
+  td:nth-child(3) {
+    text-align: left;
+  }
+
+  .delete-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+  }
+}
