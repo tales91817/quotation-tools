@@ -1,0 +1,20 @@
+.singZone {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  canvas {
+    border-bottom: 1px solid black;
+  }
+
+  .reset-btn {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 0;
+    right: -50px;
+  }
+  p {
+    text-align: center;
+  }
+}

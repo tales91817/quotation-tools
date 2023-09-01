@@ -1,6 +1,6 @@
 import React from "react";
 import "./modal-box.scss";
-import { ReactComponent as CloseBtn } from "../../asset/icons/close.svg";
+import { ReactComponent as CloseBtn } from "../../../asset/icons/close.svg";
 
 const TermModalBox = ({
   tradeInput,
@@ -17,7 +17,7 @@ const TermModalBox = ({
         </span>
 
         <form action="submit" onSubmit={handleSubmit}>
-          <label>会社</label>
+          <label>Company Title</label>
           <input
             type="text"
             name="companyName"
@@ -25,7 +25,7 @@ const TermModalBox = ({
             onChange={handleInputChange}
             required="required"
           />
-          <label>ご担当</label>
+          <label>Contactor</label>
           <input
             type="text"
             name="contactor"
@@ -33,7 +33,7 @@ const TermModalBox = ({
             onChange={handleInputChange}
             required="required"
           />
-          <label>件名</label>
+          <label>Project</label>
           <input
             type="text"
             name="project"
@@ -41,14 +41,14 @@ const TermModalBox = ({
             onChange={handleInputChange}
             required="required"
           />
-          <label>貿易条件</label>
+          <label>Trade Term</label>
           <select onChange={handleInputChange} name="tradeTerm">
             <option value="EXW">EXW</option>
             <option value="FOB">FOB</option>
             <option value="CIF">CIF</option>
             <option value="DDU">DDU</option>
           </select>
-          <label>支払条件</label>
+          <label>Payment Term</label>
           <input
             type="text"
             name="paymentTerm"
@@ -56,7 +56,7 @@ const TermModalBox = ({
             onChange={handleInputChange}
             required="required"
           />
-          <label>有効期限</label>
+          <label>Expiry Date of Quotation</label>
           <input
             type="text"
             name="exp"
@@ -64,7 +64,7 @@ const TermModalBox = ({
             onChange={handleInputChange}
             required="required"
           />
-          <label>納品先</label>
+          <label>Ship To</label>
           <input
             type="text"
             name="destination"

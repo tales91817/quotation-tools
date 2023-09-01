@@ -1,5 +1,5 @@
 import "./App.css";
-import QuotationPage from "./QuotationPage/QuotationPage";
+import QuotationPage from "./components/QuotationPage/QuotationPage";
 
 function App() {
   return (

@@ -1,7 +1,9 @@
 import { React, useState, useRef } from "react";
-import { ReactComponent as ResetBtn } from "../../asset/icons/reset.svg";
+import { ReactComponent as ResetBtn } from "../../../asset/icons/reset.svg";
+import { ReactComponent as CompleteBtn } from "../../../asset/icons/complete.svg";
+import "./signature-box.scss";
 
-const SignatureBox = () => {
+const SignatureBox = ({ onSignatureDataChange }) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const canvasRef = useRef(null);
   const [signature, setSignature] = useState(null);
@@ -14,7 +16,6 @@ const SignatureBox = () => {
     const { offsetX, offsetY } = e.nativeEvent;
     context.beginPath();
     context.moveTo(offsetX, offsetY);
-    console.log(offsetX, offsetY);
   };
 
   const handleMouseMove = (e) => {
@@ -28,7 +29,6 @@ const SignatureBox = () => {
     context.lineWidth = 2;
     context.lineTo(offsetX, offsetY);
     context.stroke();
-    console.log(offsetX, offsetY);
   };
 
   const handleMouseUp = (e) => {
@@ -47,17 +47,28 @@ const SignatureBox = () => {
     context.clearRect(0, 0, canvas.width, canvas.height);
     setSignature(null);
   };
+
+  const handleDownloadSignature = (e) => {
+    const canvas = canvasRef.current;
+    const dataURL = canvas.toDataURL("image/png");
+    onSignatureDataChange(dataURL);
+  };
+
   return (
-    <div className="myCompanySingZone">
+    <div className="singZone">
       <canvas
         ref={canvasRef}
+        width={700}
+        height={300}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseLeave}
       />
+
       <div className="reset-btn">
         <ResetBtn onClick={clearCanvas} />
+        <CompleteBtn onClick={handleDownloadSignature} />
       </div>
     </div>
   );

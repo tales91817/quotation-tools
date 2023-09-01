@@ -1,6 +1,6 @@
 import React from "react";
 import "./product-item.scss";
-import { ReactComponent as DeleteBtn } from "../../asset/icons/delete.svg";
+import { ReactComponent as DeleteBtn } from "../../../asset/icons/delete.svg";
 
 const ProductItem = ({
   id,

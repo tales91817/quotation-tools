@@ -1,18 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./quotation-page.scss";
-import { db } from "../firebase.utils";
+import { db } from "../../firebase.utils";
 import { collection, getDocs } from "firebase/firestore";
 import ProductItem from "./ProductItem/ProductItem";
 import SalesInfo from "./SalesInfo/SalesInfo";
-import ToolBar from "./ToolBar/ToolBar";
+import ToolBar from "../ToolBar/ToolBar";
 import TermModalBox from "./ModalBox/TermModalBox";
 import ProductModalBox from "./ModalBox/ProductModalBox";
 import SignatureBox from "./SignatureBox/SignatureBox";
+import { jsPDF } from "jspdf";
+import html2pdf from "html2pdf.js";
+import SignModal from "./ModalBox/SignModal";
 
 const QuotationPage = () => {
   const date = new Date().getDate();
   const month = new Date().getMonth() + 1;
   const year = new Date().getFullYear();
+  const timeStamp = Math.floor(Math.random() * 9999999);
   const [productList, setProductList] = useState([]);
   const [salesList, setSalesList] = useState([]);
   const [tradeInput, setTradeInput] = useState({
@@ -27,10 +31,12 @@ const QuotationPage = () => {
   const [tradeInputIn, setTradeInputIn] = useState({});
   const [isTermModalOpen, setIsTermModalOpen] = useState(false);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [isSignModalOpen, setIsSignModalOpen] = useState(false);
   const [quotationList, setQuotationList] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
-
-  //Drawing State
+  const [signatureDataURL, setSignatureDataURL] = useState(null);
+  //For PDF using
+  const contentRef = useRef(null);
 
   //Terms Section
 
@@ -109,52 +115,72 @@ const QuotationPage = () => {
     setTotalAmount((preveTotal) => preveTotal - total);
   };
 
+  //Transfer To PDF
+  const handleTransfer = () => {
+    const content = contentRef.current;
+    html2pdf()
+      .from(content)
+      .outputPdf()
+      .then((pdf) => {
+        const blob = new Blob([pdf], { type: "application/pdf" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "newPDF.pdf";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+  };
+
+  //Insert Signature Params
+  const handleSignatureDataChange = (dataURL) => {
+    setSignatureDataURL(dataURL);
+  };
+
   useEffect(() => {
     productInfo();
     salesInfo();
   }, []);
 
   return (
-    <div className="quotation-page">
+    <div className="quotation-page" ref={contentRef}>
       <div className="quotation-cotainer">
         <div className="header-wrapper">
           <h1>EA-HWA Enterprise Industrial Co., Ltd.</h1>
           <p>NO. 7, Lane 229,Shin Ku Rd., Shih Ku Tsun,</p>
           <p>Shen Gaang Hsiang, Changhua Hsien, Taiwan, R.O.C.</p>
           <p>TEL:886-4-7990312 FAX:886-4-7990865</p>
-          <h2>御 見 積 書</h2>
+          <h2>QUOTATION</h2>
         </div>
 
         <div className="dateInfo">
           <p className="date">
-            <strong>見積日: </strong>
+            <strong>Date: </strong>
             {`${year}/${month}/${date}`}
           </p>
           <p className="timestamp">
-            <strong>見積No.: </strong>
-            EH_{new Date().getTime()}
+            <strong>No.: </strong>
+            EH_{timeStamp}
           </p>
         </div>
 
         <div className="customerInfo">
           <div className="title">
             <div className="titleName">
-              <p>センターピア株式会社</p>
-              <p>御中</p>
+              <p>CenterPeer</p>
             </div>
           </div>
-          <div className="contactor">ご担当： {tradeInputIn.contactor} 様</div>
+          <div className="contactor">Contactor: {tradeInputIn.contactor}</div>
         </div>
 
         <div className="tradeTerm">
           <div className="tradInfo">
-            <p>件名：{tradeInputIn.project}</p>
-            <p>下記の通り、御見積申し上げます。</p>
-            <p>貿易条件：{tradeInputIn.tradeTerm}</p>
-            <p>支払条件：{tradeInputIn.paymentTerm}</p>
-            <p>有効期限：{tradeInputIn.exp}</p>
-            <p>納品先：{tradeInputIn.destination}</p>
-            <p>合計金額： US {totalAmount}</p>
+            <p>Project: {tradeInputIn.project}</p>
+            <p>Trade Term: {tradeInputIn.tradeTerm}</p>
+            <p>Payment Term: {tradeInputIn.paymentTerm}</p>
+            <p>Expiry Date of Quotation: {tradeInputIn.exp}</p>
+            <p>Ship To: {tradeInputIn.destination}</p>
+            <p>Total Amount: US {totalAmount}</p>
           </div>
 
           {salesList.map((sales) => (
@@ -175,12 +201,12 @@ const QuotationPage = () => {
             <thead>
               <tr>
                 <th>No.</th>
-                <th>項目</th>
-                <th>內容</th>
-                <th>数量</th>
-                <th>ユニット</th>
-                <th>単価</th>
-                <th>金額</th>
+                <th>Item</th>
+                <th>Description</th>
+                <th>Q'ty</th>
+                <th>Unit</th>
+                <th>Price</th>
+                <th>Amount</th>
               </tr>
             </thead>
             {quotationList.map((quote, i) => (
@@ -204,21 +230,21 @@ const QuotationPage = () => {
               <tr>
                 <td colSpan={5}></td>
                 <td>
-                  <strong>合計金額</strong>
+                  <strong>Ttal Amount</strong>
                 </td>
                 <td>US {totalAmount}</td>
               </tr>
             </tbody>
             <tfoot>
               <tr>
-                <td>備考</td>
+                <td>Note</td>
                 <td colSpan={6}></td>
               </tr>
             </tfoot>
           </table>
         </div>
         <div className="remittanceInfo">
-          <h1>【振込先】</h1>
+          <h1>Remittance Account</h1>
           <p>
             <strong>Beneficiary:</strong> EA-HWA ENTERPRISE INDUSTRIAL CO., LTD.
           </p>
@@ -240,21 +266,23 @@ const QuotationPage = () => {
             <strong>SWIFT CODE.:</strong> ABCDEFGH123
           </p>
         </div>
-        <div className="sign">
-          <div className="singZone">
-            <SignatureBox />
-            <p>EA-HWA ENTERPRISE</p>
+        <div className="signature">
+          <div className="myCompanySign">
+            {signatureDataURL && <img src={signatureDataURL} alt="Signature" />}
+            <div className="line"></div>
+            <p>EA-HWA Enterprise Industrial Co., Ltd.</p>
           </div>
-
-          <div className="singZone">
-            <SignatureBox />
-            <p>CenterPeer.</p>
+          <div className="customerSign">
+            <div className="line"></div>
+            <p>EA-HWA ENTERPRISE</p>
           </div>
         </div>
       </div>
       <ToolBar
         popupTermModal={() => setIsTermModalOpen(true)}
         popupProductModal={() => setIsProductModalOpen(true)}
+        popupSignModal={() => setIsSignModalOpen(true)}
+        transferToPDF={handleTransfer}
       />
       {isTermModalOpen && (
         <TermModalBox
@@ -270,6 +298,12 @@ const QuotationPage = () => {
           productList={productList}
           onAddProduct={handleAddProduct}
           closeModal={() => setIsProductModalOpen(false)}
+        />
+      )}
+      {isSignModalOpen && (
+        <SignModal
+          closeModal={() => setIsSignModalOpen(false)}
+          onSignatureDataChange={handleSignatureDataChange}
         />
       )}
     </div>

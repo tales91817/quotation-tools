@@ -5,25 +5,25 @@ const SalesInfo = ({ name, Email, address, company, tel, fax }) => {
     <>
       <div className="companyInfo">
         <p>
-          <strong>Company：</strong> {company}
+          <strong>Company:</strong> {company}
         </p>
         <p>
-          <strong>Address：</strong> {address}
+          <strong>Address:</strong> {address}
         </p>
         <p>
-          <strong>TEL：</strong>
+          <strong>TEL:</strong>
           {tel}
         </p>
         <p>
-          <strong>FAX：</strong>
+          <strong>FAX:</strong>
           {fax}
         </p>
         <p>
-          <strong>E-Mail：</strong>
+          <strong>E-Mail:</strong>
           {Email}
         </p>
         <p>
-          <strong>担当者：</strong>
+          <strong>Sales Rep.:</strong>
           {name}
         </p>
       </div>

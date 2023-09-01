@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ReactComponent as CloseBtn } from "../../asset/icons/close.svg";
+import { ReactComponent as CloseBtn } from "../../../asset/icons/close.svg";
 
 const ProductModalBox = ({ productList, closeModal, onAddProduct }) => {
   const [outPutProduct, setOutPutProduct] = useState("");
@@ -24,7 +24,7 @@ const ProductModalBox = ({ productList, closeModal, onAddProduct }) => {
         </span>
 
         <form action="submit">
-          <label>項目</label>
+          <label>Item</label>
           <select
             name="product"
             onChange={(e) => setOutPutProduct(e.target.value)}
@@ -36,13 +36,13 @@ const ProductModalBox = ({ productList, closeModal, onAddProduct }) => {
               </option>
             ))}
           </select>
-          <label>数量</label>
+          <label>Q'ty</label>
           <input
             type="text"
             onChange={(e) => setQuantity(e.target.value)}
             required="required"
           />
-          <label>単価</label>
+          <label>Price</label>
           <input
             type="text"
             onChange={(e) => setUnitPrice(e.target.value)}
