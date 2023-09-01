@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./quotation-page.scss";
 import { db } from "../../firebase.utils";
 import { collection, getDocs } from "firebase/firestore";
@@ -7,9 +7,7 @@ import SalesInfo from "./SalesInfo/SalesInfo";
 import ToolBar from "../ToolBar/ToolBar";
 import TermModalBox from "./ModalBox/TermModalBox";
 import ProductModalBox from "./ModalBox/ProductModalBox";
-import SignatureBox from "./SignatureBox/SignatureBox";
 import { jsPDF } from "jspdf";
-import html2pdf from "html2pdf.js";
 import SignModal from "./ModalBox/SignModal";
 
 const QuotationPage = () => {
@@ -36,7 +34,7 @@ const QuotationPage = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [signatureDataURL, setSignatureDataURL] = useState(null);
   //For PDF using
-  const contentRef = useRef(null);
+  const doc = new jsPDF();
 
   //Terms Section
 
@@ -117,19 +115,18 @@ const QuotationPage = () => {
 
   //Transfer To PDF
   const handleTransfer = () => {
-    const content = contentRef.current;
-    html2pdf()
-      .from(content)
-      .outputPdf()
-      .then((pdf) => {
-        const blob = new Blob([pdf], { type: "application/pdf" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "newPDF.pdf";
-        a.click();
-        URL.revokeObjectURL(url);
-      });
+    const elementHTML = document.querySelector(".quotation-page");
+
+    doc.html(elementHTML, {
+      callback: function (doc) {
+        doc.save("newPDF.pdf");
+      },
+      margin: [5, 5, 5, 5],
+      x: 0,
+      y: 0,
+      width: 190,
+      windowWidth: 678,
+    });
   };
 
   //Insert Signature Params
@@ -143,7 +140,7 @@ const QuotationPage = () => {
   }, []);
 
   return (
-    <div className="quotation-page" ref={contentRef}>
+    <div className="quotation-page">
       <div className="quotation-cotainer">
         <div className="header-wrapper">
           <h1>EA-HWA Enterprise Industrial Co., Ltd.</h1>
