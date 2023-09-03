@@ -10,6 +10,7 @@ import ProductModalBox from "./ModalBox/ProductModalBox";
 import { jsPDF } from "jspdf";
 import * as htmlToImage from "html-to-image";
 import SignModal from "./ModalBox/SignModal";
+import CurrencyModalBox from "./ModalBox/CurrencyModalBox";
 
 const QuotationPage = () => {
   const date = new Date().getDate();
@@ -28,12 +29,15 @@ const QuotationPage = () => {
     destination: "",
   });
   const [tradeInputIn, setTradeInputIn] = useState({});
-  const [isTermModalOpen, setIsTermModalOpen] = useState(false);
-  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
-  const [isSignModalOpen, setIsSignModalOpen] = useState(false);
   const [quotationList, setQuotationList] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [signatureDataURL, setSignatureDataURL] = useState(null);
+  //For Modal using
+  const [isTermModalOpen, setIsTermModalOpen] = useState(false);
+  const [isProductModalOpen, setIsProductModalOpen] = useState(false);
+  const [isSignModalOpen, setIsSignModalOpen] = useState(false);
+  const [isCurrencyModalOpen, setIsCurrencyModalOpen] = useState(false);
+
   //For PDF using
   const contentRef = useRef(null);
   const [isTransferring, setIsTransferring] = useState(true);
@@ -290,6 +294,7 @@ const QuotationPage = () => {
           popupTermModal={() => setIsTermModalOpen(true)}
           popupProductModal={() => setIsProductModalOpen(true)}
           popupSignModal={() => setIsSignModalOpen(true)}
+          popupCurrnecyModal={() => setIsCurrencyModalOpen(true)}
           transferToPDF={handleTransfer}
         />
       </div>
@@ -314,6 +319,9 @@ const QuotationPage = () => {
           closeModal={() => setIsSignModalOpen(false)}
           onSignatureDataChange={handleSignatureDataChange}
         />
+      )}
+      {isCurrencyModalOpen && (
+        <CurrencyModalBox closeModal={() => setIsCurrencyModalOpen(false)} />
       )}
     </div>
   );
