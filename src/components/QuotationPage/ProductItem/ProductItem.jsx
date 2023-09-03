@@ -15,32 +15,31 @@ const ProductItem = ({
   unit,
   total,
   onDeleteProduct,
+  isTransferring,
 }) => {
   const removeProduct = () => {
     onDeleteProduct(id, total);
   };
   return (
     <>
-      <tbody>
-        <tr>
-          <td>{order + 1}</td>
-          <td>{partNo}</td>
-          <td>
-            品物：{productName}
-            <br />
-            サイズ：{size}
-            <br />
-            コーティング：{color}
-          </td>
-          <td>{quantity}</td>
-          <td>{unit}</td>
-          <td>US {price}</td>
-          <td>US {total}</td>
-          <td className="delete-btn">
-            <DeleteBtn onClick={removeProduct} />
-          </td>
-        </tr>
-      </tbody>
+      <tr>
+        <td>{order + 1}</td>
+        <td>{partNo}</td>
+        <td>
+          Product: {productName}
+          <br />
+          Size: {size}
+          <br />
+          Color: {color}
+        </td>
+        <td>{quantity}</td>
+        <td>{unit}</td>
+        <td>US {price}</td>
+        <td>US {total}</td>
+        <td className="delete-btn">
+          {isTransferring && <DeleteBtn onClick={removeProduct} />}
+        </td>
+      </tr>
     </>
   );
 };

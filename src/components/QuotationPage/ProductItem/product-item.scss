@@ -1,5 +1,8 @@
 tbody {
-  position: relative;
+
+  tr {
+    position: relative;
+  }
   tr:nth-child(even) {
     background: lightgrey;
   }

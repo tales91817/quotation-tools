@@ -128,7 +128,7 @@ table {
 }
 
 .quotation-cotainer {
-  width: 80%;
+  width: 100%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -137,12 +137,10 @@ table {
 }
 
 .header-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
   font-family: "Noto Sans", sans-serif;
   line-height: 1.6em;
+  text-align: center;
 
   h1 {
     font-size: 1.3rem;
@@ -236,7 +234,8 @@ table {
   }
 }
 
-.toolBar {
+.toolbar-area {
+  position: relative;
   width: 10%;
 }
 

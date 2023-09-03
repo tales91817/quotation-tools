@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./quotation-page.scss";
 import { db } from "../../firebase.utils";
 import { collection, getDocs } from "firebase/firestore";
@@ -8,6 +8,7 @@ import ToolBar from "../ToolBar/ToolBar";
 import TermModalBox from "./ModalBox/TermModalBox";
 import ProductModalBox from "./ModalBox/ProductModalBox";
 import { jsPDF } from "jspdf";
+import * as htmlToImage from "html-to-image";
 import SignModal from "./ModalBox/SignModal";
 
 const QuotationPage = () => {
@@ -34,7 +35,8 @@ const QuotationPage = () => {
   const [totalAmount, setTotalAmount] = useState(0);
   const [signatureDataURL, setSignatureDataURL] = useState(null);
   //For PDF using
-  const doc = new jsPDF();
+  const contentRef = useRef(null);
+  const [isTransferring, setIsTransferring] = useState(true);
 
   //Terms Section
 
@@ -113,20 +115,27 @@ const QuotationPage = () => {
     setTotalAmount((preveTotal) => preveTotal - total);
   };
 
-  //Transfer To PDF
-  const handleTransfer = () => {
-    const elementHTML = document.querySelector(".quotation-page");
+  //Transfer To PNG then to PDF
+  const handleTransfer = async () => {
+    const content = contentRef.current;
+    setIsTransferring(false);
 
-    doc.html(elementHTML, {
-      callback: function (doc) {
-        doc.save("newPDF.pdf");
-      },
-      margin: [5, 5, 5, 5],
-      x: 0,
-      y: 0,
-      width: 190,
-      windowWidth: 678,
-    });
+    //transfer to png
+    htmlToImage
+      .toPng(content)
+      .then(function (dataUrl) {
+        const img = new Image();
+        img.src = dataUrl;
+
+        //transfer to PDF
+        const pdf = new jsPDF();
+        pdf.addImage(dataUrl, "PNG", 10, 10, 190, 220);
+        pdf.save("newPDF.pdf");
+        setIsTransferring(true);
+      })
+      .catch(function (error) {
+        console.error("oops, something went wrong!", error);
+      });
   };
 
   //Insert Signature Params
@@ -141,7 +150,7 @@ const QuotationPage = () => {
 
   return (
     <div className="quotation-page">
-      <div className="quotation-cotainer">
+      <div className="quotation-cotainer" ref={contentRef}>
         <div className="header-wrapper">
           <h1>EA-HWA Enterprise Industrial Co., Ltd.</h1>
           <p>NO. 7, Lane 229,Shin Ku Rd., Shih Ku Tsun,</p>
@@ -206,28 +215,29 @@ const QuotationPage = () => {
                 <th>Amount</th>
               </tr>
             </thead>
-            {quotationList.map((quote, i) => (
-              <ProductItem
-                key={quote.id}
-                id={quote.id}
-                partNo={quote.partNo}
-                order={i}
-                productName={quote.productName}
-                hasStock={quote.hasStock}
-                price={quote.price}
-                quantity={quote.quantity}
-                size={quote.size}
-                color={quote.color}
-                unit={quote.unit}
-                total={quote.total}
-                onDeleteProduct={handleDeleteProduct}
-              />
-            ))}
             <tbody>
+              {quotationList.map((quote, i) => (
+                <ProductItem
+                  key={quote.id}
+                  id={quote.id}
+                  partNo={quote.partNo}
+                  order={i}
+                  productName={quote.productName}
+                  hasStock={quote.hasStock}
+                  price={quote.price}
+                  quantity={quote.quantity}
+                  size={quote.size}
+                  color={quote.color}
+                  unit={quote.unit}
+                  total={quote.total}
+                  onDeleteProduct={handleDeleteProduct}
+                  isTransferring={isTransferring}
+                />
+              ))}
               <tr>
                 <td colSpan={5}></td>
                 <td>
-                  <strong>Ttal Amount</strong>
+                  <strong>Total Amount</strong>
                 </td>
                 <td>US {totalAmount}</td>
               </tr>
@@ -275,12 +285,14 @@ const QuotationPage = () => {
           </div>
         </div>
       </div>
-      <ToolBar
-        popupTermModal={() => setIsTermModalOpen(true)}
-        popupProductModal={() => setIsProductModalOpen(true)}
-        popupSignModal={() => setIsSignModalOpen(true)}
-        transferToPDF={handleTransfer}
-      />
+      <div className="toolbar-area">
+        <ToolBar
+          popupTermModal={() => setIsTermModalOpen(true)}
+          popupProductModal={() => setIsProductModalOpen(true)}
+          popupSignModal={() => setIsSignModalOpen(true)}
+          transferToPDF={handleTransfer}
+        />
+      </div>
       {isTermModalOpen && (
         <TermModalBox
           tradeInput={tradeInput}
