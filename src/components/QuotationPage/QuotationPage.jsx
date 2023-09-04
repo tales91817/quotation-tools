@@ -10,7 +10,7 @@ import ProductModalBox from "./ModalBox/ProductModalBox";
 import { jsPDF } from "jspdf";
 import * as htmlToImage from "html-to-image";
 import SignModal from "./ModalBox/SignModal";
-import CurrencyModalBox from "./ModalBox/CurrencyModalBox";
+import CurrencyModalBox from "./ModalBox/CurrencyModalBox/CurrencyModalBox";
 
 const QuotationPage = () => {
   const date = new Date().getDate();
