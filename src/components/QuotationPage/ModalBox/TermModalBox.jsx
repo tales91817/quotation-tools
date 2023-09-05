@@ -72,11 +72,12 @@ const TermModalBox = ({
             onChange={handleInputChange}
             required="required"
           />
-
-          <button className="updateBtb">Submit</button>
-          <button className="updateBtb" onClick={clearInfo}>
-            Clear
-          </button>
+          <div className="btn-wrapper">
+            <button className="updateBtn">Submit</button>
+            <button className="clearBtn" onClick={clearInfo}>
+              Clear
+            </button>
+          </div>
         </form>
       </div>
     </div>

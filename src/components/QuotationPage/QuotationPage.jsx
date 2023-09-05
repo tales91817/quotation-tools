@@ -11,12 +11,13 @@ import { jsPDF } from "jspdf";
 import * as htmlToImage from "html-to-image";
 import SignModal from "./ModalBox/SignModal";
 import CurrencyModalBox from "./ModalBox/CurrencyModalBox/CurrencyModalBox";
+import CalculatorModalBox from "./ModalBox/CalculatorModalBox/CalculatorModalBox";
 
 const QuotationPage = () => {
   const date = new Date().getDate();
   const month = new Date().getMonth() + 1;
   const year = new Date().getFullYear();
-  const timeStamp = Math.floor(Math.random() * 9999999);
+  const [timeStamp, setTimeStamp] = useState(new Date().getTime());
   const [productList, setProductList] = useState([]);
   const [salesList, setSalesList] = useState([]);
   const [tradeInput, setTradeInput] = useState({
@@ -37,6 +38,7 @@ const QuotationPage = () => {
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [isSignModalOpen, setIsSignModalOpen] = useState(false);
   const [isCurrencyModalOpen, setIsCurrencyModalOpen] = useState(false);
+  const [isCalculatorModalOpen, setIsCalculatorModalOpen] = useState(false);
 
   //For PDF using
   const contentRef = useRef(null);
@@ -75,6 +77,10 @@ const QuotationPage = () => {
       exp: "",
       destination: "",
     });
+  };
+
+  const handleClearProducts = () => {
+    setProductList({});
   };
 
   //Product Section
@@ -152,6 +158,12 @@ const QuotationPage = () => {
     salesInfo();
   }, []);
 
+  //TimeStamp
+  useEffect(() => {
+    const newTimeStamp = new Date().getTime();
+    setTimeStamp(newTimeStamp);
+  }, []);
+
   return (
     <div className="quotation-page">
       <div className="quotation-cotainer" ref={contentRef}>
@@ -177,7 +189,7 @@ const QuotationPage = () => {
         <div className="customerInfo">
           <div className="title">
             <div className="titleName">
-              <p>CenterPeer</p>
+              <p>{tradeInput.companyName}</p>
             </div>
           </div>
           <div className="contactor">Contactor: {tradeInputIn.contactor}</div>
@@ -264,10 +276,10 @@ const QuotationPage = () => {
             Township, Changhua County 509, Taiwan.
           </p>
           <p>
-            <strong>Bank Name:</strong> FIRST COMMERCIAL BANK
+            <strong>Bank Name:</strong> Big World BANK
           </p>
           <p>
-            <strong>BANKBank Address:</strong> 144 TSU YU ROAD SEC. 1, TAICHUNG,
+            <strong>BANKBank Address:</strong> 145 GG ROAD SEC. 1, TAICHUNG,
             TAIWAN.
           </p>
           <p>
@@ -285,7 +297,7 @@ const QuotationPage = () => {
           </div>
           <div className="customerSign">
             <div className="line"></div>
-            <p>EA-HWA ENTERPRISE</p>
+            {tradeInput.companyName && <p>{tradeInput.companyName}</p>}
           </div>
         </div>
       </div>
@@ -295,6 +307,7 @@ const QuotationPage = () => {
           popupProductModal={() => setIsProductModalOpen(true)}
           popupSignModal={() => setIsSignModalOpen(true)}
           popupCurrnecyModal={() => setIsCurrencyModalOpen(true)}
+          popupCalculatorModal={() => setIsCalculatorModalOpen(true)}
           transferToPDF={handleTransfer}
         />
       </div>
@@ -312,6 +325,7 @@ const QuotationPage = () => {
           productList={productList}
           onAddProduct={handleAddProduct}
           closeModal={() => setIsProductModalOpen(false)}
+          clearProducts={handleClearProducts}
         />
       )}
       {isSignModalOpen && (
@@ -322,6 +336,11 @@ const QuotationPage = () => {
       )}
       {isCurrencyModalOpen && (
         <CurrencyModalBox closeModal={() => setIsCurrencyModalOpen(false)} />
+      )}
+      {isCalculatorModalOpen && (
+        <CalculatorModalBox
+          closeModal={() => setIsCalculatorModalOpen(false)}
+        />
       )}
     </div>
   );

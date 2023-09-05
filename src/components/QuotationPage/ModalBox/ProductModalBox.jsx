@@ -49,10 +49,11 @@ const ProductModalBox = ({ productList, closeModal, onAddProduct }) => {
             required="required"
           />
 
-          <button className="updateBtb" onClick={handleAddProduct}>
-            Add Product
-          </button>
-          <button className="updateBtb">Clear</button>
+          <div className="btn-wrapper">
+            <button className="updateBtn" onClick={handleAddProduct}>
+              Add Product
+            </button>
+          </div>
         </form>
       </div>
     </div>

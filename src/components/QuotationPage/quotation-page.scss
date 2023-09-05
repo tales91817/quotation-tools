@@ -134,6 +134,7 @@ table {
   flex-direction: column;
   padding: 20px;
   font-family: "Yu Gothic", sans-serif;
+  border: 1px solid gray;
 }
 
 .header-wrapper {
@@ -168,6 +169,8 @@ table {
       align-items: flex-end;
       width: 50%;
       justify-content: flex-start;
+      border-bottom: 1px solid #000;
+      font-weight: 700;
     }
 
     p {
@@ -176,6 +179,10 @@ table {
     p:first-child {
       font-size: 2rem;
     }
+  }
+  .contactor {
+    margin: 8px 0;
+    font-weight: 500;
   }
 }
 
@@ -226,6 +233,8 @@ table {
 .remittanceInfo {
   padding: 20px;
   h1 {
+    margin: 10px 0;
+    font-weight: 700;
     font-size: 1.5rem;
     line-height: 1.2em;
   }
@@ -241,7 +250,7 @@ table {
 
 .signature {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   .myCompanySign {
     display: flex;
     flex-direction: column;
@@ -249,9 +258,21 @@ table {
     img {
       width: 500px;
       height: 200px;
-      border-bottom: 1px solid #000;
     }
     p {
+      width: 500px;
+      border-top: 1px solid #000;
+      text-align: center;
+    }
+  }
+
+  .customerSign {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    p {
+      width: 500px;
+      border-top: 1px solid #000;
       text-align: center;
     }
   }

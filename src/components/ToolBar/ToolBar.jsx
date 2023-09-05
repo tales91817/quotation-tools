@@ -14,6 +14,7 @@ const ToolBar = ({
   transferToPDF,
   popupSignModal,
   popupCurrnecyModal,
+  popupCalculatorModal,
 }) => {
   return (
     <>
@@ -23,7 +24,7 @@ const ToolBar = ({
         <Sign className="icon" onClick={popupSignModal} />
         <PDF className="icon" onClick={transferToPDF} />
         <Currency className="icon" onClick={popupCurrnecyModal} />
-        <Calculator className="icon" />
+        <Calculator className="icon" onClick={popupCalculatorModal} />
       </div>
     </>
   );

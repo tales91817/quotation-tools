@@ -5,9 +5,14 @@
   top: 0;
   width: 100%; /* Full width */
   height: 100%; /* Full height */
+  font-family: "Poppins", sans-serif;
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.modal::-webkit-scrollbar {
+  display: none;
 }
 
 /* Modal Content/Box */
@@ -17,10 +22,13 @@
   padding: 20px;
   border: 1px solid #888;
   width: 80%; /* Could be more or less, depending on screen size */
+  border-radius: 20px;
 
   form {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-size: 1.2rem;
 
     label {
@@ -29,7 +37,12 @@
 
     input,
     select {
+      width: 50%;
       height: 30px;
+      font-size: 17px;
+      padding: 0 15px;
+      border: 1px solid #999;
+      border-radius: 10px;
     }
 
     button {
@@ -47,6 +60,50 @@
   float: right;
   font-size: 28px;
   cursor: pointer;
+}
+
+.btn-wrapper {
+  display: flex;
+  justify-content: space-around;
+  width: 50%;
+
+  .updateBtn {
+    background: linear-gradient(-180deg, #00d775, #00bd68);
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+    color: #ffffff;
+    height: 44px;
+    overflow: hidden;
+    padding: 0 20px;
+    line-height: 44px;
+    text-align: center;
+    border: none;
+  }
+  .updateBtn:hover {
+    background: #00bd68;
+  }
+
+  .clearBtn {
+    background: linear-gradient(
+      -180deg,
+      rgba(255, 70, 70, 1),
+      rgba(252, 38, 38, 1)
+    );
+
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+    color: #ffffff;
+    height: 44px;
+    overflow: hidden;
+    padding: 0 20px;
+    line-height: 44px;
+    text-align: center;
+    border: none;
+  }
+
+  .clearBtn:hover {
+    background: #cd0000;
+  }
 }
 
 .sign {
