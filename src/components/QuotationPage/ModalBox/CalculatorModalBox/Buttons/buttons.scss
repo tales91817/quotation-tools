@@ -1,0 +1,29 @@
+.buttons {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  background: radial-gradient(
+    circle,
+    rgba(24, 49, 115, 1) 0%,
+    rgba(20, 70, 115, 1) 100%
+  );
+
+  button {
+    cursor: pointer;
+    font-size: 2rem;
+    padding: 20px;
+    border: 1px solid white;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+
+  button:hover,
+  button:focus {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+.span-two {
+  grid-column: span 2;
+}
