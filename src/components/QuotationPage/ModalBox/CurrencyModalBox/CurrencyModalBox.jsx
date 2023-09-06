@@ -13,8 +13,9 @@ const CurrencyModalBox = ({ closeModal }) => {
   const [amountInFromCurrency, setAmountInFromCurrency] = useState(null);
 
   //API URL
-  const access_key = "173dd47d2515714e06cacb95";
+  const access_key = process.env.REACT_APP_API_Keys;
   const url = `https://v6.exchangerate-api.com/v6/${access_key}/latest/${fromCurrency}`;
+  console.log(access_key);
 
   useEffect(() => {
     axios
@@ -25,6 +26,7 @@ const CurrencyModalBox = ({ closeModal }) => {
         setExchangeRate(res.data.conversion_rates[toCurrency]);
       })
       .catch((err) => console.log("Error: ", err));
+    // eslint-disable-next-line
   }, [fromCurrency, toCurrency]);
 
   const convertCurrency = () => {

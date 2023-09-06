@@ -44,8 +44,6 @@ const QuotationPage = () => {
   const contentRef = useRef(null);
   const [isTransferring, setIsTransferring] = useState(true);
 
-  //Terms Section
-
   const salesInfo = async () => {
     const salesCol = collection(db, "Sales");
     const saleSnapshot = await getDocs(salesCol);
@@ -82,8 +80,6 @@ const QuotationPage = () => {
   const handleClearProducts = () => {
     setProductList({});
   };
-
-  //Product Section
 
   const productInfo = async () => {
     const productsCol = collection(db, "Server Rack");

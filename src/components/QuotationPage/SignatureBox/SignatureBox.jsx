@@ -6,6 +6,7 @@ import "./signature-box.scss";
 const SignatureBox = ({ onSignatureDataChange }) => {
   const [isDrawing, setIsDrawing] = useState(false);
   const canvasRef = useRef(null);
+  // eslint-disable-next-line
   const [signature, setSignature] = useState(null);
 
   //Signing Function
