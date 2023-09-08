@@ -2,8 +2,6 @@
 
 # README
 
-![專案封面圖](https://fakeimg.pl/500/)
-
 > 此專案是一款報價單製作工具，集結產品清單導入、簽名板、PDF 轉檔、匯率換算、計算機等業務常常會用到的工具為一個 app。。
 
 - [線上觀看連結](https://www.youtube.com/watch?v=KMhwI-ND7lI)
@@ -19,7 +17,7 @@
 
 ## 畫面
 
-![主介面](https://drive.google.com/file/d/1BVc3KtEJdt-i1MzUbtrqGWqoRjAgrRcq/view?usp=drive_link)
+![主介面](https://upload.cc/i1/2023/09/08/7VAXGh.png)
 
 ## 安裝
 
