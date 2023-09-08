@@ -1,5 +1,3 @@
-<!-- 底下標籤來源參考寫法可至：https://github.com/Envoy-VC/awesome-badges#github-stats -->
-
 # README
 
 > 此專案是一款報價單製作工具，集結產品清單導入、簽名板、PDF 轉檔、匯率換算、計算機等業務常常會用到的工具為一個 app。。
@@ -52,7 +50,7 @@ npm start
 在瀏覽器網址列輸入以下即可看到畫面
 
 ```bash
-http://localhost:300/
+http://localhost:3000/
 ```
 
 ## 資料夾說明
