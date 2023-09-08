@@ -246,6 +246,11 @@ table {
 .toolbar-area {
   position: relative;
   width: 10%;
+  background: radial-gradient(
+    circle,
+    rgba(24, 49, 115, 1) 0%,
+    rgba(20, 70, 115, 1) 100%
+  );
 }
 
 .signature {
